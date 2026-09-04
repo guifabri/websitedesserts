@@ -1,11 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>HI</h1>
-</body>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dulce Capricho | Postres Artesanales</title>
+    <meta
+      name="description"
+      content="Dulce Capricho ofrece postres artesanales irresistibles, sabores únicos y una experiencia dulce para cada ocasión."
+    />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="navbar container">
+        <a href="#inicio" class="brand" aria-label="Inicio">
+          <img src="images/logo.jpg" alt="Logo Dulce Capricho" width="52" height="52" decoding="async" />
+          <span>Dulce Capricho</span>
+        </a>
+
+        <button class="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-menu">
+          <a href="#inicio">Inicio</a>
+          <a href="#nosotros">Nosotros</a>
+          <a href="#productos">Productos</a>
+          <a href="#contacto">Contacto</a>
+          <button class="audio-toggle" type="button" aria-label="Reproducir audio" aria-pressed="false">
+            <span class="audio-toggle__icon">🔊</span>
+            <span class="audio-toggle__label">Sonido</span>
+          </button>
+          <button class="cart-toggle" type="button" aria-label="Abrir carrito" aria-expanded="false">
+            <span aria-hidden="true">🛒</span>
+            <span>Carrito</span>
+            <strong class="cart-count">0</strong>
+          </button>
+          <a href="#contacto" class="nav-button">Pide ahora</a>
+        </div>
+      </nav>
+    </header>
+
+    <audio id="dessert-audio" loop preload="auto" src="audios/dulce-capricho-audio.mp3"></audio>
+
+    <aside class="cart-panel" aria-label="Carrito de compras" aria-hidden="true">
+      <div class="cart-panel__header">
+        <h2>Tu carrito</h2>
+        <button class="cart-close" type="button" aria-label="Cerrar carrito">×</button>
+      </div>
+      <div class="cart-items">
+        <p class="cart-empty">Aún no has agregado postres.</p>
+      </div>
+      <div class="cart-panel__footer">
+        <div class="cart-total"><span>Total</span><strong>$0.00</strong></div>
+        <a class="btn btn-primary cart-checkout" href="#contacto">Continuar pedido</a>
+      </div>
+    </aside>
+
+    <main>
+      <section class="hero" id="inicio">
+        <div class="dessert-burst" aria-hidden="true">
+          <span class="burst burst--1">🍓</span>
+          <span class="burst burst--2">🧁</span>
+          <span class="burst burst--3">🍰</span>
+          <span class="burst burst--4">🍫</span>
+        </div>
+        <div class="container hero__content">
+          <div class="hero__text">
+            <p class="eyebrow">Pastelería artesanal</p>
+            <h1>Endulza cada momento con caprichos irresistibles.</h1>
+            <p class="hero__description">
+              En Dulce Capricho creamos postres con sabor casero, presentación elegante y una receta hecha con amor para celebrar cada instante.
+            </p>
+
+            <div class="hero__actions">
+              <a href="#productos" class="btn btn-primary">Ver sabores</a>
+              <a href="#contacto" class="btn btn-secondary">Hacer pedido</a>
+            </div>
+
+            <ul class="hero__highlights">
+              <li>Hechos a diario</li>
+              <li>Ingredientes premium</li>
+              <li>Entrega deliciosa</li>
+            </ul>
+          </div>
+
+          <div class="hero__image-wrap">
+            <img
+              src="images/15.webp"
+              alt="Postres artesanales de Dulce Capricho"
+              width="900"
+              height="1100"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="hero-cta" id="nosotros">
+        <div class="container hero-cta__inner">
+          <div class="hero-cta__text">
+            <p class="eyebrow">Dulce Capricho</p>
+            <h2>Postres que convierten cada día en una pequeña celebración.</h2>
+          </div>
+          <a href="#productos" class="btn btn-primary">Explorar menú</a>
+        </div>
+      </section>
+
+      <section class="products" id="productos">
+        <div class="container">
+          <div class="section-heading">
+            <p class="eyebrow">Especialidades</p>
+            <h2>Postres destacados</h2>
+          </div>
+
+          <div class="product-grid">
+            <article class="product-card" data-name="Tarta de frutas" data-price="18">
+              <img src="images/7.jpg" alt="Tarta de frutas" width="700" height="520" loading="lazy" decoding="async" />
+              <div class="product-card__content">
+                <span class="product-card__tag">Más vendido</span>
+                <h3>Tarta de frutas</h3>
+                <p>Base suave con crema y mezcla de frutas frescas.</p>
+                <div class="product-card__footer">
+                  <strong>$18.00</strong>
+                  <button class="add-to-cart" type="button">Agregar al carrito</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-name="Brownie intenso" data-price="14">
+              <img src="images/8.jpg" alt="Brownie de chocolate" width="700" height="520" loading="lazy" decoding="async" />
+              <div class="product-card__content">
+                <span class="product-card__tag">Clásico</span>
+                <h3>Brownie intenso</h3>
+                <p>Chocolate oscuro, textura húmeda y un toque dulce perfecto.</p>
+                <div class="product-card__footer">
+                  <strong>$14.00</strong>
+                  <button class="add-to-cart" type="button">Agregar al carrito</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-name="Cupcake vainilla" data-price="12">
+              <img src="images/9.avif" alt="Cupcake de vainilla" width="700" height="520" loading="lazy" decoding="async" />
+              <div class="product-card__content">
+                <span class="product-card__tag">Frescura</span>
+                <h3>Cupcake vainilla</h3>
+                <p>Esponjoso, suave y decorado con crema delicada.</p>
+                <div class="product-card__footer">
+                  <strong>$12.00</strong>
+                  <button class="add-to-cart" type="button">Agregar al carrito</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-name="Pastel de zanahoria" data-price="20">
+              <img src="images/10.jpg" alt="Pastel de zanahoria" width="700" height="520" loading="lazy" decoding="async" />
+              <div class="product-card__content">
+                <span class="product-card__tag">Temporada</span>
+                <h3>Pastel de zanahoria</h3>
+                <p>Un sabor cálido, esponjoso y perfecto para compartir.</p>
+                <div class="product-card__footer">
+                  <strong>$20.00</strong>
+                  <button class="add-to-cart" type="button">Agregar al carrito</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-name="Cheesecake berries" data-price="22">
+              <img src="images/11.webp" alt="Cheesecake de berries" width="700" height="520" loading="lazy" decoding="async" />
+              <div class="product-card__content">
+                <span class="product-card__tag">Deluxe</span>
+                <h3>Cheesecake berries</h3>
+                <p>Crema suave con frutos rojos y una capa ligera de dulzor.</p>
+                <div class="product-card__footer">
+                  <strong>$22.00</strong>
+                  <button class="add-to-cart" type="button">Agregar al carrito</button>
+                </div>
+              </div>
+            </article>
+
+            <article class="product-card" data-name="Mousse chocolate" data-price="16">
+              <img src="images/12.jpg" alt="Mousse de chocolate" width="700" height="520" loading="lazy" decoding="async" />
+              <div class="product-card__content">
+                <span class="product-card__tag">Especial</span>
+                <h3>Mousse chocolate</h3>
+                <p>Una textura cremosa, intensa y profundamente irresistible.</p>
+                <div class="product-card__footer">
+                  <strong>$16.00</strong>
+                  <button class="add-to-cart" type="button">Agregar al carrito</button>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-strip" id="contacto">
+        <div class="container cta-strip__content">
+          <div>
+            <p class="eyebrow">Haz tu pedido</p>
+            <h2>Tu momento dulce comienza aquí.</h2>
+          </div>
+          <a href="https://wa.me/5210000000000" class="btn btn-primary" target="_blank" rel="noreferrer">
+            Pedir por WhatsApp
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer__grid">
+        <div class="footer__brand">
+          <a href="#inicio" class="brand brand--footer">
+            <img src="images/logo.jpg" alt="Logo Dulce Capricho" width="52" height="52" decoding="async" />
+            <span>Dulce Capricho</span>
+          </a>
+          <p>
+            Postres artesanales para momentos especiales, celebraciones y caprichos diarios.
+          </p>
+        </div>
+
+        <div>
+          <h3>Navegación</h3>
+          <ul>
+            <li><a href="#inicio">Inicio</a></li>
+            <li><a href="#nosotros">Nosotros</a></li>
+            <li><a href="#productos">Productos</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Contacto</h3>
+          <ul>
+            <li><a href="tel:+5210000000000">+52 1 000 000 0000</a></li>
+            <li><a href="mailto:hello@dulcecapricho.com">hello@dulcecapricho.com</a></li>
+            <li>CDMX, México</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Redes</h3>
+          <ul>
+            <li><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">Instagram</a></li>
+            <li><a href="https://www.facebook.com/" target="_blank" rel="noreferrer">Facebook</a></li>
+            <li><a href="https://www.tiktok.com/" target="_blank" rel="noreferrer">TikTok</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>© <span id="year"></span> Dulce Capricho. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <script src="scripts/script.js" defer></script>
+  </body>
 </html>
