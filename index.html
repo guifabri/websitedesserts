@@ -11,6 +11,23 @@
     <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
+    <div class="user-status-bar">
+      <div class="container user-status-bar__inner">
+        <div class="user-greeting-wrapper">
+          <span class="user-greeting" id="user-greeting">¡Bienvenido a Dulce Capricho! 🧁</span>
+          <button class="user-name-edit-btn" id="edit-name-btn" type="button" aria-label="Cambiar nombre" title="Cambiar nombre">✏️</button>
+        </div>
+        <div class="site-timer" id="site-timer" title="Tiempo de navegación en el sitio">
+          <span class="timer-icon" aria-hidden="true">⏱️</span>
+          <span class="timer-label">Tiempo en el sitio:</span>
+          <strong class="timer-display" id="timer-display">0s</strong>
+          <button class="reset-timer-btn" id="reset-timer" type="button" aria-label="Reiniciar contador del tiempo del sitio">
+            Reiniciar
+          </button>
+        </div>
+      </div>
+    </div>
+
     <header class="site-header">
       <nav class="navbar container">
         <a href="#inicio" class="brand" aria-label="Inicio">
@@ -257,6 +274,30 @@
         <p>© <span id="year"></span> Dulce Capricho. Todos los derechos reservados.</p>
       </div>
     </footer>
+
+    <!-- Modal de Bienvenida para el Nombre del Visitante -->
+    <div class="welcome-modal-overlay" id="welcome-modal" aria-hidden="true" role="dialog" aria-labelledby="modal-title">
+      <div class="welcome-modal-card">
+        <button class="welcome-modal-close" id="modal-close-btn" type="button" aria-label="Cerrar modal">&times;</button>
+        <div class="welcome-modal-badge">🍰</div>
+        <h2 id="modal-title">¡Te damos la bienvenida!</h2>
+        <p id="modal-subtitle">Queremos personalizar tu experiencia en <strong>Dulce Capricho</strong>. ¿Cuál es tu nombre?</p>
+        <form id="welcome-form" class="welcome-modal-form">
+          <input
+            type="text"
+            id="user-name-input"
+            placeholder="Ej. Sofía, Alejandro..."
+            maxlength="30"
+            autocomplete="name"
+            required
+          />
+          <div class="welcome-modal-actions">
+            <button type="button" class="btn btn-secondary" id="modal-skip-btn">Omitir</button>
+            <button type="submit" class="btn btn-primary" id="modal-submit-btn">Guardar nombre</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
     <script src="scripts/script.js" defer></script>
   </body>

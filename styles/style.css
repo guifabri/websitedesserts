@@ -919,3 +919,236 @@ h4 {
     min-height: 360px;
   }
 }
+
+/* ==========================================================================
+   User Status Bar (Greeting & Time Spent Counter)
+   ========================================================================== */
+.user-status-bar {
+  background: linear-gradient(90deg, #fff3eb 0%, #fde7e9 50%, #eaf4ee 100%);
+  border-bottom: 1px solid rgba(75, 42, 34, 0.08);
+  font-size: 0.88rem;
+  color: var(--brown);
+  padding: 0.45rem 0;
+  position: relative;
+  z-index: 25;
+}
+
+.user-status-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+}
+
+.user-greeting-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 600;
+}
+
+.user-greeting {
+  letter-spacing: 0.01em;
+}
+
+.user-name-edit-btn {
+  background: rgba(75, 42, 34, 0.06);
+  border: 1px solid rgba(75, 42, 34, 0.12);
+  border-radius: 999px;
+  padding: 0.15rem 0.45rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.user-name-edit-btn:hover {
+  background: var(--pastel-rose);
+  color: var(--white);
+  transform: scale(1.08);
+}
+
+.site-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(75, 42, 34, 0.08);
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  box-shadow: 0 2px 6px rgba(75, 42, 34, 0.04);
+}
+
+.timer-icon {
+  font-size: 0.95rem;
+}
+
+.timer-label {
+  color: var(--muted);
+}
+
+.timer-display {
+  color: var(--brown);
+  font-weight: 700;
+  min-width: 2.2ch;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.reset-timer-btn {
+  appearance: none;
+  border: 1px solid rgba(75, 42, 34, 0.15);
+  background: rgba(75, 42, 34, 0.06);
+  color: var(--brown);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-timer-btn:hover {
+  background: var(--pastel-rose);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   Welcome / Name Prompt Modal
+   ========================================================================== */
+.welcome-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(47, 31, 27, 0.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.welcome-modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.welcome-modal-card {
+  position: relative;
+  width: min(440px, 100%);
+  background: var(--cream);
+  border-radius: 24px;
+  padding: 2.2rem 1.8rem;
+  box-shadow: 0 24px 48px rgba(75, 42, 34, 0.22);
+  border: 2px solid rgba(244, 181, 182, 0.5);
+  text-align: center;
+  transform: translateY(20px) scale(0.94);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.welcome-modal-overlay.is-open .welcome-modal-card {
+  transform: translateY(0) scale(1);
+}
+
+.welcome-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(75, 42, 34, 0.06);
+  color: var(--brown);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.welcome-modal-close:hover {
+  background: rgba(75, 42, 34, 0.12);
+  transform: rotate(90deg);
+}
+
+.welcome-modal-badge {
+  font-size: 2.8rem;
+  margin-bottom: 0.6rem;
+  display: inline-block;
+  animation: floatModalBadge 3s ease-in-out infinite;
+}
+
+@keyframes floatModalBadge {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(4deg);
+  }
+}
+
+.welcome-modal-card h2 {
+  font-size: 1.7rem;
+  color: var(--brown);
+  margin-bottom: 0.5rem;
+}
+
+.welcome-modal-card p {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.4rem;
+  line-height: 1.5;
+}
+
+.welcome-modal-form input[type="text"] {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border-radius: 12px;
+  border: 1.5px solid rgba(75, 42, 34, 0.2);
+  font-size: 1rem;
+  outline: none;
+  margin-bottom: 1.25rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.welcome-modal-form input[type="text"]:focus {
+  border-color: var(--pastel-rose);
+  box-shadow: 0 0 0 4px rgba(244, 181, 182, 0.25);
+}
+
+.welcome-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.welcome-modal-actions .btn {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 540px) {
+  .user-status-bar__inner {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .welcome-modal-actions {
+    flex-direction: column;
+  }
+}
+

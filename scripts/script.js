@@ -132,3 +132,165 @@ const yearElement = document.getElementById('year');
 if (yearElement) {
   yearElement.textContent = new Date().getFullYear();
 }
+
+/* ==========================================================================
+   Gestión de Visitante y Saludo (LocalStorage)
+   ========================================================================== */
+const STORAGE_KEY_USER_NAME = 'dulce_capricho_user_name';
+const STORAGE_KEY_MODAL_DISMISSED = 'dulce_capricho_modal_dismissed';
+
+const userGreeting = document.getElementById('user-greeting');
+const editNameBtn = document.getElementById('edit-name-btn');
+const welcomeModal = document.getElementById('welcome-modal');
+const modalCloseBtn = document.getElementById('modal-close-btn');
+const modalSkipBtn = document.getElementById('modal-skip-btn');
+const welcomeForm = document.getElementById('welcome-form');
+const userNameInput = document.getElementById('user-name-input');
+const modalTitle = document.getElementById('modal-title');
+const modalSubtitle = document.getElementById('modal-subtitle');
+
+const updateGreeting = (name) => {
+  if (!userGreeting) return;
+  if (name && name.trim() !== '') {
+    userGreeting.textContent = `¡Hola, ${name.trim()}! Qué gusto tenerte en Dulce Capricho 🍰`;
+    if (editNameBtn) editNameBtn.setAttribute('title', `Cambiar nombre (actual: ${name.trim()})`);
+  } else {
+    userGreeting.textContent = '¡Bienvenido/a a Dulce Capricho! 🧁';
+    if (editNameBtn) editNameBtn.setAttribute('title', 'Ingresar tu nombre');
+  }
+};
+
+const openWelcomeModal = (isEditing = false) => {
+  if (!welcomeModal) return;
+  const currentName = localStorage.getItem(STORAGE_KEY_USER_NAME) || '';
+
+  if (isEditing) {
+    if (modalTitle) modalTitle.textContent = 'Modificar tu nombre';
+    if (modalSubtitle) modalSubtitle.textContent = 'Actualiza tu nombre para que podamos saludarte correctamente:';
+    if (userNameInput) userNameInput.value = currentName;
+  } else {
+    if (modalTitle) modalTitle.textContent = '¡Te damos la bienvenida!';
+    if (modalSubtitle) modalSubtitle.textContent = 'Queremos personalizar tu experiencia en Dulce Capricho. ¿Cuál es tu nombre?';
+    if (userNameInput) userNameInput.value = '';
+  }
+
+  welcomeModal.classList.add('is-open');
+  welcomeModal.setAttribute('aria-hidden', 'false');
+  if (userNameInput) {
+    setTimeout(() => userNameInput.focus(), 150);
+  }
+};
+
+const closeWelcomeModal = () => {
+  if (!welcomeModal) return;
+  welcomeModal.classList.remove('is-open');
+  welcomeModal.setAttribute('aria-hidden', 'true');
+};
+
+if (welcomeModal) {
+  const savedUserName = localStorage.getItem(STORAGE_KEY_USER_NAME);
+  const wasDismissed = localStorage.getItem(STORAGE_KEY_MODAL_DISMISSED) === 'true';
+
+  if (savedUserName) {
+    updateGreeting(savedUserName);
+  } else {
+    updateGreeting('');
+    // Si no había nombre guardado y no se ha omitido expresamente, mostrar modal
+    if (!wasDismissed) {
+      setTimeout(() => openWelcomeModal(false), 500);
+    }
+  }
+
+  if (welcomeForm && userNameInput) {
+    welcomeForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const enteredName = userNameInput.value.trim();
+      if (enteredName) {
+        localStorage.setItem(STORAGE_KEY_USER_NAME, enteredName);
+        localStorage.removeItem(STORAGE_KEY_MODAL_DISMISSED);
+        updateGreeting(enteredName);
+        closeWelcomeModal();
+      }
+    });
+  }
+
+  if (modalSkipBtn) {
+    modalSkipBtn.addEventListener('click', () => {
+      localStorage.setItem(STORAGE_KEY_MODAL_DISMISSED, 'true');
+      closeWelcomeModal();
+    });
+  }
+
+  if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', () => {
+      closeWelcomeModal();
+    });
+  }
+
+  if (editNameBtn) {
+    editNameBtn.addEventListener('click', () => {
+      openWelcomeModal(true);
+    });
+  }
+
+  // Cerrar al hacer clic en el backdrop fuera de la tarjeta
+  welcomeModal.addEventListener('click', (event) => {
+    if (event.target === welcomeModal) {
+      closeWelcomeModal();
+    }
+  });
+
+  // Cerrar con la tecla Escape
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && welcomeModal.classList.contains('is-open')) {
+      closeWelcomeModal();
+    }
+  });
+}
+
+/* ==========================================================================
+   Contador de Tiempo de Uso en el Sitio (LocalStorage)
+   ========================================================================== */
+const STORAGE_KEY_TIME_SPENT = 'dulce_capricho_time_spent_seconds';
+const timerDisplay = document.getElementById('timer-display');
+const resetTimerButton = document.getElementById('reset-timer');
+
+const formatTimeSpent = (totalSeconds) => {
+  const seconds = totalSeconds % 60;
+  const minutes = Math.floor((totalSeconds / 60) % 60);
+  const hours = Math.floor(totalSeconds / 3600);
+
+  if (hours > 0) {
+    return `${hours}h ${minutes}m ${seconds}s`;
+  }
+  if (minutes > 0) {
+    return `${minutes}m ${seconds}s`;
+  }
+  return `${seconds}s`;
+};
+
+if (timerDisplay) {
+  let totalSecondsSpent = Number(localStorage.getItem(STORAGE_KEY_TIME_SPENT) || 0);
+  timerDisplay.textContent = formatTimeSpent(totalSecondsSpent);
+
+  const startTimer = () => {
+    return window.setInterval(() => {
+      totalSecondsSpent += 1;
+      timerDisplay.textContent = formatTimeSpent(totalSecondsSpent);
+      localStorage.setItem(STORAGE_KEY_TIME_SPENT, String(totalSecondsSpent));
+    }, 1000);
+  };
+
+  let timerInterval = startTimer();
+
+  if (resetTimerButton) {
+    resetTimerButton.addEventListener('click', () => {
+      window.clearInterval(timerInterval);
+      localStorage.removeItem(STORAGE_KEY_TIME_SPENT);
+      totalSecondsSpent = 0;
+      timerDisplay.textContent = '0s';
+      timerInterval = startTimer();
+    });
+  }
+}
+
