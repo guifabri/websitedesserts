@@ -1016,6 +1016,35 @@ h4 {
   transform: translateY(-1px);
 }
 
+.notification-permission-btn {
+  appearance: none;
+  border: 1px solid rgba(75, 42, 34, 0.15);
+  background: linear-gradient(135deg, #f5dede, #f8efe8);
+  color: var(--brown);
+  border-radius: 999px;
+  padding: 0.38rem 0.8rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.notification-permission-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(75, 42, 34, 0.08);
+}
+
+.notification-permission-btn.is-enabled {
+  background: linear-gradient(135deg, #d4f6d9, #ebf9ee);
+  border-color: rgba(40, 124, 62, 0.2);
+  color: #1d6b3f;
+}
+
+.notification-permission-btn:disabled {
+  opacity: 0.8;
+  cursor: default;
+}
+
 /* ==========================================================================
    Welcome / Name Prompt Modal
    ========================================================================== */

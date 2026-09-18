@@ -283,14 +283,159 @@ if (timerDisplay) {
 
   let timerInterval = startTimer();
 
+  const resetTimer = () => {
+    window.clearInterval(timerInterval);
+    localStorage.removeItem(STORAGE_KEY_TIME_SPENT);
+    totalSecondsSpent = 0;
+    timerDisplay.textContent = '0s';
+    timerInterval = startTimer();
+  };
+
   if (resetTimerButton) {
-    resetTimerButton.addEventListener('click', () => {
-      window.clearInterval(timerInterval);
-      localStorage.removeItem(STORAGE_KEY_TIME_SPENT);
-      totalSecondsSpent = 0;
-      timerDisplay.textContent = '0s';
-      timerInterval = startTimer();
+    resetTimerButton.addEventListener('click', resetTimer);
+  }
+
+  const logoutButton = document.getElementById('logout-btn');
+  if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+      resetTimer();
     });
+  }
+}
+
+const notificationPermissionButton = document.getElementById('notification-permission-btn');
+const STORAGE_KEY_NOTIFICATIONS_ENABLED = 'dulce_capricho_notifications_enabled';
+let notificationLoopInterval = null;
+
+const getNotificationPreference = () => {
+  const storedValue = localStorage.getItem(STORAGE_KEY_NOTIFICATIONS_ENABLED);
+  return storedValue === null ? true : storedValue === 'true';
+};
+
+const setNotificationPreference = (isEnabled) => {
+  localStorage.setItem(STORAGE_KEY_NOTIFICATIONS_ENABLED, String(isEnabled));
+};
+
+const sendPromotionNotification = () => {
+  if (!('Notification' in window) || Notification.permission !== 'granted' || !getNotificationPreference()) {
+    return;
+  }
+
+  new Notification('Dulce Capricho', {
+    body: '✨ Promo del minuto: disfruta un sabor especial en tus postres favoritos.',
+    icon: 'images/logo.jpg'
+  });
+};
+
+const startNotificationLoop = () => {
+  if (notificationLoopInterval) {
+    window.clearInterval(notificationLoopInterval);
+  }
+
+  if (!getNotificationPreference()) {
+    return;
+  }
+
+  sendPromotionNotification();
+  notificationLoopInterval = window.setInterval(() => {
+    sendPromotionNotification();
+  }, 60000);
+};
+
+const stopNotificationLoop = () => {
+  if (notificationLoopInterval) {
+    window.clearInterval(notificationLoopInterval);
+    notificationLoopInterval = null;
+  }
+};
+
+const setNotificationButtonState = (permission) => {
+  if (!notificationPermissionButton) return;
+
+  if (permission === 'granted') {
+    const notificationsEnabled = getNotificationPreference();
+
+    notificationPermissionButton.textContent = notificationsEnabled
+      ? '🔔 Notificaciones activadas'
+      : '🔕 Notificaciones desactivadas';
+
+    notificationPermissionButton.classList.toggle('is-enabled', notificationsEnabled);
+    notificationPermissionButton.disabled = false;
+
+    if (notificationsEnabled) {
+      startNotificationLoop();
+    } else {
+      stopNotificationLoop();
+    }
+    return;
+  }
+
+  if (permission === 'denied') {
+    notificationPermissionButton.textContent = '🔕 Notificaciones bloqueadas';
+    notificationPermissionButton.classList.remove('is-enabled');
+    notificationPermissionButton.disabled = true;
+    stopNotificationLoop();
+    return;
+  }
+
+  notificationPermissionButton.textContent = '🔔 Notificaciones';
+  notificationPermissionButton.classList.remove('is-enabled');
+  notificationPermissionButton.disabled = false;
+  stopNotificationLoop();
+};
+
+const requestNotificationPermission = async () => {
+  if (!('Notification' in window)) {
+    if (notificationPermissionButton) {
+      notificationPermissionButton.textContent = 'Notificaciones no disponibles';
+      notificationPermissionButton.disabled = true;
+    }
+    return;
+  }
+
+  const currentPermission = Notification.permission;
+
+  if (currentPermission === 'granted') {
+    const notificationsEnabled = getNotificationPreference();
+
+    if (notificationsEnabled) {
+      setNotificationPreference(false);
+      setNotificationButtonState('granted');
+      return;
+    }
+
+    setNotificationPreference(true);
+    setNotificationButtonState('granted');
+    return;
+  }
+
+  if (currentPermission === 'denied') {
+    setNotificationButtonState('denied');
+    return;
+  }
+
+  try {
+    const permission = await Notification.requestPermission();
+
+    if (permission === 'granted') {
+      setNotificationPreference(true);
+      setNotificationButtonState('granted');
+      return;
+    }
+
+    setNotificationButtonState('denied');
+  } catch (error) {
+    setNotificationButtonState('denied');
+  }
+};
+
+if (notificationPermissionButton) {
+  if (!('Notification' in window)) {
+    notificationPermissionButton.textContent = 'Notificaciones no disponibles';
+    notificationPermissionButton.disabled = true;
+  } else {
+    setNotificationButtonState(Notification.permission);
+    notificationPermissionButton.addEventListener('click', requestNotificationPermission);
   }
 }
 
